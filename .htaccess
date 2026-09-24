@@ -1,0 +1,10 @@
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# ใช้โดเมนหลักแบบไม่มี www เพียงรูปแบบเดียว
+RewriteCond %{HTTP_HOST} ^www\.sunnext\.co\.th$ [NC]
+RewriteRule ^ https://sunnext.co.th%{REQUEST_URI} [R=301,L]
+</IfModule>

@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://niiiiiino.github.io/Sunnex-Sale-Page/sitemap.xml
+
+Sitemap: https://sunnext.co.th/sitemap.xml

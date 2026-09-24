@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ไม่พบหน้าที่ต้องการ | Sunnex Technology</title>
+  <meta name="description" content="ไม่พบหน้าที่ต้องการ กรุณากลับไปยังหน้าแรกหรือเลือกดูผลิตภัณฑ์ของ Sunnex Technology">
+  <meta name="robots" content="noindex,follow">
+  <link rel="icon" type="image/png" sizes="176x176" href="./assets/images/แบรนด์/favicon-sunnex.png">
+  <link rel="apple-touch-icon" sizes="176x176" href="./assets/images/แบรนด์/favicon-sunnex.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      padding: 32px 20px;
+      font-family: "Prompt", system-ui, sans-serif;
+      color: #172033;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(143,187,251,.30), transparent 32%),
+        radial-gradient(circle at 85% 85%, rgba(5,64,151,.12), transparent 34%),
+        #f5f8fc;
+    }
+    .error-card {
+      position: relative;
+      width: min(100%, 620px);
+      overflow: hidden;
+      border: 1px solid rgba(5,64,151,.12);
+      border-radius: 30px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 24px 70px rgba(0,31,77,.14);
+      text-align: center;
+      padding: 46px 46px 42px;
+    }
+    .error-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 6px;
+      background: linear-gradient(90deg, #054097, #8fbbfb);
+    }
+    .brand-mark {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(5,64,151,.14);
+    }
+    .brand-mark img {
+      display: block;
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+    }
+    .error-code {
+      margin: 0;
+      color: #054097;
+      font-size: clamp(64px, 13vw, 108px);
+      font-weight: 700;
+      line-height: .9;
+      letter-spacing: -4px;
+    }
+    h1 {
+      margin: 24px 0 0;
+      color: #0f172a;
+      font-size: clamp(24px, 4vw, 32px);
+      line-height: 1.35;
+    }
+    .description {
+      max-width: 470px;
+      margin: 14px auto 0;
+      color: #64748b;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    .actions {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .button {
+      min-width: 160px;
+      border: 1px solid #054097;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary {
+      color: #fff;
+      background: #054097;
+      box-shadow: 0 10px 24px rgba(5,64,151,.22);
+    }
+    .button-primary:hover { background: #033473; }
+    .button-secondary { color: #054097; background: #fff; }
+    .button-secondary:hover { background: #eef5ff; }
+    .support {
+      margin: 26px 0 0;
+      color: #94a3b8;
+      font-size: 13px;
+    }
+    .support a { color: #054097; text-decoration: none; }
+    @media (max-width: 540px) {
+      body { padding: 20px 14px; }
+      .error-card { border-radius: 24px; padding: 34px 20px 30px; }
+      .brand-mark { width: 68px; height: 68px; margin-bottom: 22px; }
+      .brand-mark img { width: 54px; height: 54px; }
+      .actions { flex-direction: column; }
+      .button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="error-card">
+    <div class="brand-mark">
+      <img src="./assets/images/แบรนด์/favicon-sunnex.png" alt="Sunnex Technology">
+    </div>
+    <p class="error-code" aria-label="ข้อผิดพลาด 404">404</p>
+    <h1>ไม่พบหน้าที่ต้องการ</h1>
+    <p class="description">ลิงก์นี้อาจถูกย้าย เปลี่ยนชื่อ หรือไม่มีอยู่แล้ว ลองกลับไปหน้าแรกหรือเลือกดูผลิตภัณฑ์ทั้งหมดของเรา</p>
+    <div class="actions">
+      <a href="./index.html" class="button button-primary">กลับหน้าแรก</a>
+      <a href="./products/index.html" class="button button-secondary">ดูผลิตภัณฑ์</a>
+    </div>
+    <p class="support">หากต้องการความช่วยเหลือ ติดต่อ <a href="https://line.me/ti/p/~@sunnext">LINE @sunnext</a></p>
+  </main>
+</body>
+</html>
