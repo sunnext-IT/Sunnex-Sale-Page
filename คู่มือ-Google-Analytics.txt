@@ -1,0 +1,39 @@
+Google Analytics 4 สำหรับเว็บไซต์ Sunnext
+
+Measurement ID: G-NXW8TYRTBE
+
+ติดตั้งแล้ว
+- ใส่ Google tag ครบทุกหน้า HTML จำนวน 81 หน้า
+- ใช้ไฟล์ Event กลาง: /assets/js/analytics-events.js
+- ไม่มี Google tag ซ้ำในหน้าเดียวกัน
+
+เหตุการณ์ที่เก็บ
+1. page_view
+   บันทึกการเปิดหน้าอัตโนมัติจาก GA4
+
+2. generate_lead
+   บันทึกเมื่อผู้ใช้กดลิงก์ LINE
+   parameter: method, link_url, link_text
+
+3. click_to_call
+   บันทึกเมื่อผู้ใช้กดเบอร์โทรศัพท์
+   parameter: phone_number, link_text
+
+4. view_brochure
+   บันทึกเมื่อผู้ใช้กดเปิดหรือดูภาพโบรชัวร์แบบเต็ม
+   parameter: brochure_name
+
+5. select_item
+   บันทึกเมื่อผู้ใช้กดปุ่มดูรายละเอียดจากการ์ดสินค้า
+   parameter: item_list_name, item_name, link_url
+
+วิธีตรวจหลังอัปเว็บ
+1. เข้า Google Analytics ของ Sunnext
+2. เปิดรายงาน Realtime
+3. เปิด https://sunnext.co.th/ ในหน้าต่างไม่ระบุตัวตน
+4. เปิดหลายหน้า กดปุ่ม LINE และปุ่มดูรายละเอียด
+5. รอประมาณ 1-5 นาทีแล้วตรวจ page_view และ Event
+
+หมายเหตุ
+- อย่าเพิ่มโค้ด G-NXW8TYRTBE ซ้ำผ่าน Google Tag Manager หรือ Hosting
+- หากใช้ระบบ Cookie Consent ภายหลัง ควรเชื่อม Google Consent Mode v2 เพิ่มเติม
