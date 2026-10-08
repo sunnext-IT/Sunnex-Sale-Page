@@ -49,3 +49,5 @@
 @media (hover:hover){.sx-btn:hover{transform:translateY(-2px)}}
 @media (max-width:640px){.sx-banner{padding:24px 20px}.sx-banner .sx-actions{width:100%}.sx-btn{flex:1 1 100%;justify-content:center}}
 @media (min-width:768px){.sx-faq>div:last-child:nth-child(odd){grid-column:1/-1}}
+/* ---- FAQ accordion: same look as article pages (classes come from article markup + components.css) ---- */
+.sx-faqbox.faq-list{max-width:56rem;margin-left:auto;margin-right:auto}
