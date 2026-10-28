@@ -1,0 +1,6 @@
+SEO visual updates 2026-10-28
+- Added three generated illustrative article photos in assets/images/บทความ/
+- Added photos to home article cards, article listing, and article detail pages
+- Reduced home article section heading size
+- Increased gap between article cards and internal card padding
+- Illustrations are AI-generated examples, not actual SUNNEX installation photos
