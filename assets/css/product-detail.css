@@ -58,3 +58,7 @@
 .sx-table td{padding:16px 20px;border-top:1px solid #e2e8f0;color:#475569;vertical-align:top}
 .sx-table tbody tr:first-child td{border-top:0}
 .sx-table td:first-child{color:#0f172a;font-weight:600}
+/* ---- category pages: short intro + one accordion box ---- */
+.sx-catinfo{max-width:56rem;margin:0 auto}
+.sx-catinfo .sx-faqbox.faq-list{max-width:none}
+.sx-faqbox .faq-answer .sx-tablewrap{margin:4px 0 20px;box-shadow:none}
