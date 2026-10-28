@@ -1,0 +1,13 @@
+SUNNEX Problem-Based SEO Preview | 2026-10-28
+Source: Sunnex-Visitor-Counter-Fixed.zip
+
+New: articles/cloudy-tap-water/index.html
+New: articles/yellow-tap-water/index.html
+New: articles/cloudy-village-water-supply/index.html
+Modified: index.html
+Modified: articles/index.html
+Modified: products/water-filtration/index.html
+Modified: products/water-filtration/water-treatment-plant-12q/index.html
+Modified: sitemap.xml
+
+Existing visitor counter files retained. No live deploy performed. New article content is editorial draft and should be reviewed for product-specific technical accuracy before publishing.
