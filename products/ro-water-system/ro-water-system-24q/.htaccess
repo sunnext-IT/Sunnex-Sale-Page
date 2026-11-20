@@ -1,0 +1,3 @@
+<IfModule mod_alias.c>
+RedirectMatch 301 "^/products/ro-water-system/ro-water-system-24q(?:/index\.html|/)?$" "https://sunnext.co.th/products/ro-water-system/ro-water-system-12q/#24q"
+</IfModule>
