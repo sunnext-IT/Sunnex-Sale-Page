@@ -7,3 +7,6 @@
 
 .rv-category-grid .brochure-card__title{font-size:13px;line-height:1.5;min-height:45px}.rv-category-grid .brochure-card__body{height:140px}.rv-category-grid .ro-photo-card{aspect-ratio:1039/1513}.rv-category-grid .ro-photo-card img{object-fit:contain}
 @media(max-width:767px){.rv-category-grid .brochure-card__title{font-size:11px;min-height:44px}.rv-category-grid .brochure-card__body{height:125px}}
+
+.rv-hero .rv-selector{margin:16px 0 18px}.rv-related .related-product-code-tag{display:inline-flex;align-items:center;position:relative;flex-shrink:0;align-self:flex-start;min-width:0;width:auto;height:auto;padding:3px 12px 3px 6px;font-size:10px!important;line-height:1;font-weight:600;background:#054097;color:#fff;border-radius:0;white-space:nowrap}.rv-related .related-product-code-tag .product-code-tag__dot{position:absolute;right:10%;top:50%;width:4px;height:4px;transform:translateY(-50%);border-radius:50%;background:white}.rv-related .ar-card-title{align-items:flex-start;gap:4px}.rv-related .ar-card-title h3{min-width:0;flex:1}
+@media(max-width:767px){.rv-related .related-product-code-tag{font-size:8px!important;padding:3px 10px 3px 5px}.rv-hero .rv-selector{margin-top:14px;margin-bottom:16px}}

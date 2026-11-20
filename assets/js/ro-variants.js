@@ -36,7 +36,7 @@
     const src = model ? '../../../assets/images/products/ro-water-system/' + model.image : initialSrc;
     const alt = model ? `เครื่องกรองน้ำดื่ม RO Sunnex ${q}Q (${q} คิว) กำลังผลิต ${model.flow.toLocaleString('en-US')} ลิตรต่อวัน` : initialAlt;
     image.src = src; image.alt = alt; full.src = src; full.alt = alt + ' แบบเต็ม';
-    status.textContent = model ? `กำลังดูรุ่น ${q}Q / ${q} คิว · กดรุ่นเดิมอีกครั้งเพื่อกลับภาพหลัก` : 'เลือกขนาดเพื่อดูภาพและสเปคของแต่ละรุ่น';
+    status.textContent = model ? `กำลังดูรุ่น ${q}Q / ${q} คิว · กดรุ่นเดิมอีกครั้งเพื่อกลับภาพหลัก` : '';
     if (!reduced.matches && image.animate) image.animate([{ opacity: .55 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
     if (writeHistory) {
       const suffix = model ? '#' + q + 'q' : '';
