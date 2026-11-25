@@ -1,0 +1,13 @@
+/* Same banner classes and button styles as the stainless water tank article.
+   All rules are scoped to the article contact banner. */
+main .sx-card.sx-card--brand.sx-banner.st-contact{box-sizing:border-box;display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;margin:40px 0;padding:32px 36px;border:1px solid transparent;border-radius:20px;background:linear-gradient(135deg,#054097 0%,#0b64d4 100%);color:#fff;box-shadow:0 14px 30px -10px rgba(5,64,151,.55);overflow-wrap:break-word;grid-column:auto}
+main .st-contact.sx-banner h2{margin:0;color:#fff!important;font-size:1.5rem;font-weight:600;line-height:1.4}
+main .st-contact.sx-banner p{margin:8px 0 0;color:#dbeafe;line-height:1.7}
+main .st-contact.sx-banner .sx-actions{display:flex;flex-wrap:wrap;gap:12px;max-width:100%}
+main .st-contact.sx-banner a.sx-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;max-width:100%;border:0;border-radius:9999px;background:#fff;color:#054097!important;font-family:inherit;font-size:16px;font-weight:600;line-height:1.5;padding:12px 22px;box-shadow:0 8px 18px -8px rgba(0,0,0,.4);transition:transform .2s ease;text-decoration:none!important;text-decoration-line:none!important;border-bottom-width:0;background-image:none}
+main .st-contact.sx-banner a.sx-btn.sx-btn--ghost{background:transparent;color:#fff!important;border:1px solid rgba(255,255,255,.6);box-shadow:none}
+main .st-contact.sx-banner a.sx-btn:hover,main .st-contact.sx-banner a.sx-btn:focus,main .st-contact.sx-banner a.sx-btn:visited{text-decoration:none!important;text-decoration-line:none!important}
+main .st-contact.sx-banner a.sx-btn:hover{transform:translateY(-2px)}main .st-contact.sx-banner a.sx-btn:focus-visible{outline:3px solid #fff;outline-offset:4px}
+@media(max-width:767px){main .sx-card.sx-card--brand.sx-banner.st-contact{padding:24px 20px}main .st-contact.sx-banner .sx-actions{width:100%}}
+@media(max-width:480px){main .st-contact.sx-banner a.sx-btn{flex:1 1 100%;justify-content:center}}
+@media(prefers-reduced-motion:reduce){main .st-contact.sx-banner a.sx-btn{transition:none}main .st-contact.sx-banner a.sx-btn:hover{transform:none}}
