@@ -348,3 +348,7 @@
     transition: none;
   }
 }
+
+/* Keep article TOC numbers together without changing its layout. */
+details.ar-toc nav ol li > a > span:first-child{white-space:nowrap;flex-shrink:0}
+
