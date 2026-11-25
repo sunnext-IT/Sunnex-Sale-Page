@@ -1,0 +1,8 @@
+/* Shared compact SKU tags for recommendation cards only. */
+.sx-recommend-title{width:100%;display:flex!important;align-items:flex-start!important;gap:4px!important;min-width:0;max-width:100%}
+.sx-recommend-title>h3{flex:1 1 0%;min-width:0;margin-top:0!important;margin-bottom:0!important}
+.sx-recommend-title>.sx-recommend-code{position:relative!important;display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;flex:0 0 auto!important;box-sizing:border-box!important;width:auto!important;min-width:0!important;max-width:none!important;height:auto!important;min-height:0!important;margin:1px 0 0!important;padding:3px 10px 3px 5px!important;border:0!important;border-radius:0!important;background:#054097!important;color:#fff!important;font-size:8px!important;line-height:1!important;font-weight:600!important;letter-spacing:0!important;white-space:nowrap!important;clip-path:polygon(0 0,82% 0,100% 50%,82% 100%,0 100%)!important;box-shadow:none!important}
+.sx-recommend-code::before,.sx-recommend-code::after{content:none!important}
+.sx-recommend-code>.sx-recommend-dot{position:absolute!important;right:4px!important;top:50%!important;display:block!important;width:3px!important;height:3px!important;border-radius:50%!important;background:#fff!important;transform:translateY(-50%)!important}
+@media(min-width:640px){.sx-recommend-title>.sx-recommend-code{font-size:9px!important;padding:3px 11px 3px 6px!important}}
+@media(min-width:768px){.sx-recommend-title>.sx-recommend-code{font-size:10px!important}}
