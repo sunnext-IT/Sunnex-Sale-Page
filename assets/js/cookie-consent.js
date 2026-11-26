@@ -3,17 +3,18 @@
   if (window.SunnexConsent) return;
   var KEY = 'sunnex-cookie-consent-v1', TTL = 180 * 86400000;
   var gaId = 'G-NXW8TYRTBE', started = false, previousFocus, previousOverflow;
+  var pixelId = '2190034821592762', pixelLoading = false, pixelInitialized = false, pixelPageView = false;
   var inertStates = [], mounted = false;
   function read() {
     try {
       var c = JSON.parse(localStorage.getItem(KEY));
-      if (c && c.version === 1 && typeof c.analytics === 'boolean' && typeof c.marketing === 'boolean' && Number.isFinite(c.savedAt) && Date.now() >= c.savedAt && Date.now() - c.savedAt < TTL) return c;
+      if (c && c.version === 2 && typeof c.analytics === 'boolean' && typeof c.marketing === 'boolean' && Number.isFinite(c.savedAt) && Date.now() >= c.savedAt && Date.now() - c.savedAt < TTL) return c;
     } catch (_) {}
     return null;
   }
   var choice = read();
   window['ga-disable-' + gaId] = !(choice && choice.analytics);
-  function snapshot() { return Object.assign({necessary: true, analytics: false, marketing: false}, choice || {}, {marketing: false}); }
+  function snapshot() { return Object.assign({necessary: true, analytics: false, marketing: false}, choice || {}); }
   function analytics() {
     if (!choice || !choice.analytics || started) return;
     started = true;
@@ -27,10 +28,10 @@
     tag.async = true; tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
     document.head.appendChild(tag);
   }
-  function clearAnalyticsCookies() {
+  function clearCookies(pattern) {
     document.cookie.split(';').forEach(function (part) {
       var name = part.split('=')[0].trim();
-      if (!/^(_ga(?:_|$)|_gid$|_gat(?:_|$))/.test(name)) return;
+      if (!pattern.test(name)) return;
       var domains = ['', location.hostname, '.' + location.hostname];
       var bits = location.hostname.split('.');
       while (bits.length > 2) { bits.shift(); domains.push('.' + bits.join('.')); }
@@ -41,21 +42,66 @@
       }); });
     });
   }
-  var policyHTML = "<div class=\"sx-cookie-policy-intro\"><span class=\"sx-cookie-eyebrow\">COOKIE POLICY</span><h3>นโยบายคุกกี้ของ Sunnex Technology</h3><p>เว็บไซต์ sunnext.co.th ให้ความสำคัญกับความเป็นส่วนตัวของผู้เข้าชม นโยบายนี้อธิบายว่าเราใช้คุกกี้และพื้นที่จัดเก็บในเบราว์เซอร์เพื่ออะไร และคุณเลือกอนุญาตหรือปฏิเสธได้อย่างไร</p><small>มีผลวันที่ 26 พฤศจิกายน 2569</small></div>\n<section><h4>1. คุกกี้คืออะไร</h4><p>คุกกี้เป็นข้อมูลขนาดเล็กที่เว็บไซต์หรือผู้ให้บริการบันทึกในเบราว์เซอร์ เพื่อจดจำข้อมูลการใช้งาน เว็บไซต์ยังอาจใช้เทคโนโลยีใกล้เคียง เช่น localStorage ซึ่งจัดเก็บข้อมูลไว้ในอุปกรณ์ของคุณ ข้อมูลบางรายการอาจเชื่อมโยงกับผู้ใช้หรืออุปกรณ์ได้ จึงควรเลือกอนุญาตตามความต้องการของคุณ</p></section>\n<section><h4>2. เราใช้ข้อมูลเหล่านี้เพื่ออะไร</h4><ul><li><b>จดจำตัวเลือกความเป็นส่วนตัว:</b> บันทึกว่าคุณอนุญาตคุกกี้ประเภทใด เพื่อใช้ตัวเลือกเดียวกันเมื่อเปลี่ยนหน้าหรือกลับมาเยี่ยมชม</li><li><b>วิเคราะห์และปรับปรุงเว็บไซต์:</b> เมื่อคุณอนุญาตด้านสถิติ เราใช้ Google Analytics เพื่อเข้าใจจำนวนการเข้าชม หน้าที่ได้รับความสนใจ และการใช้งาน เช่น การกดติดต่อหรือดูรายละเอียดสินค้า</li><li><b>การโฆษณา:</b> ขณะนี้ยังไม่เปิดใช้ Meta Pixel บนระบบคุกกี้นี้ จึงยังไม่มีการส่งข้อมูลโฆษณาไปยัง Meta ผ่านระบบนี้</li></ul></section>\n<section><h4>3. ประเภทและระยะเวลาการจัดเก็บ</h4><div class=\"sx-cookie-policy-type\"><b>คุกกี้และพื้นที่จัดเก็บที่จำเป็น</b><p>ใช้ localStorage ชื่อ sunnex-cookie-consent-v1 เพื่อเก็บตัวเลือกและเวลาที่คุณบันทึก ระบบจะขอให้เลือกใหม่เมื่อครบ 180 วัน การลบข้อมูลเว็บไซต์หรือเปลี่ยนเบราว์เซอร์อาจทำให้ต้องเลือกใหม่ ข้อมูลตัวเลือกเดิมอาจยังอยู่ในอุปกรณ์จนถูกแทนที่หรือลบโดยคุณ</p></div><div class=\"sx-cookie-policy-type\"><b>คุกกี้เพื่อการวิเคราะห์</b><p>ใช้ Google Analytics โดยคุกกี้อาจมีชื่อ _ga และ _ga_* เพื่อแยกผู้ใช้และช่วงการเข้าชม ค่าอายุเริ่มต้นของผู้ให้บริการคือ 2 ปี ทั้งนี้อายุจริงขึ้นกับการตั้งค่าและข้อจำกัดของเบราว์เซอร์ เราจะเริ่มโหลด Google Analytics เมื่อคุณอนุญาตประเภทนี้เท่านั้น</p></div><div class=\"sx-cookie-policy-type\"><b>คุกกี้เพื่อการโฆษณา</b><p>ยังไม่เปิดใช้งาน คุณจึงไม่ต้องอนุญาตประเภทนี้ในขณะนี้ หากเพิ่มเครื่องมือโฆษณาในอนาคต เราจะปรับข้อมูลเกี่ยวกับเครื่องมือ วัตถุประสงค์ และตัวเลือกความยินยอมก่อนใช้งาน</p></div></section>\n<section><h4>4. คุณควบคุมคุกกี้ได้อย่างไร</h4><p>คุณเลือก “ยอมรับทั้งหมด” เพื่ออนุญาตคุกกี้ทางเลือกที่เปิดใช้งานอยู่ เลือก “ไม่ยอมรับทั้งหมด” เพื่อปิดคุกกี้ที่ไม่จำเป็น หรือเลือกเฉพาะประเภทแล้วกด “บันทึกการตั้งค่า” การปฏิเสธไม่ปิดกั้นการอ่านเนื้อหา การดูสินค้า หรือการติดต่อบริษัท</p><p>เปลี่ยนใจได้ทุกเมื่อผ่านปุ่ม “ตั้งค่าคุกกี้” มุมล่างซ้ายของเว็บไซต์ เมื่อถอนความยินยอมด้านสถิติ ระบบจะหยุดการวัดผล พยายามลบคุกกี้ Analytics ที่เข้าถึงได้ และอาจโหลดหน้าใหม่เพื่อหยุดสคริปต์ที่ทำงานอยู่ การถอนความยินยอมไม่ลบข้อมูลที่ส่งไปก่อนหน้าโดยอัตโนมัติ</p><p>คุณสามารถลบข้อมูลเว็บไซต์ผ่านการตั้งค่าเบราว์เซอร์ได้ หากปิดกั้นพื้นที่จัดเก็บทั้งหมด ระบบอาจจำตัวเลือกข้ามหน้าไม่ได้</p></section>\n<section><h4>5. ผู้ให้บริการภายนอก</h4><p>เมื่ออนุญาต Google Analytics ผู้ให้บริการอาจประมวลผลข้อมูลการเข้าชม อุปกรณ์ เบราว์เซอร์ และเหตุการณ์ใช้งานตามการตั้งค่าบริการ อ่านเพิ่มเติมได้ที่ <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">นโยบายความเป็นส่วนตัวของ Google</a> และ <a href=\"https://support.google.com/analytics/answer/11397207\" target=\"_blank\" rel=\"noopener\">ข้อมูลคุกกี้ Google Analytics</a></p><p>ตัวเลือกในหน้าต่างนี้ควบคุม Google Analytics ของเว็บไซต์ ส่วนแผนที่ เนื้อหาฝัง ตัวนับผู้เข้าชม และบริการที่คุณเปิดผ่านลิงก์ภายนอกอาจมีการประมวลผลข้อมูลแยกต่างหาก โปรดศึกษานโยบายของบริการนั้นด้วย</p></section>\n<section><h4>6. ติดต่อและการปรับปรุงนโยบาย</h4><p>หากมีคำถามเกี่ยวกับการใช้คุกกี้ ติดต่อ Sunnex Technology ผ่าน <a href=\"https://line.me/ti/p/~@sunnext\" target=\"_blank\" rel=\"noopener\">LINE @sunnext</a> โทร <a href=\"tel:021151484\">02-115-1484</a> หรือ <a href=\"tel:0814241186\">081-424-1186</a> เราจะปรับนโยบายนี้เมื่อการใช้เครื่องมือหรือวัตถุประสงค์เปลี่ยนแปลง พร้อมระบุวันที่มีผลไว้ในหน้านี้</p></section>\n";
+  function clearAnalyticsCookies() { clearCookies(/^(_ga(?:_|$)|_gid$|_gat(?:_|$))/); }
+  function clearMarketingCookies() { clearCookies(/^(_fbp|_fbc)$/); }
+  function initializePixel() {
+    if (!choice || !choice.marketing) return;
+    if (!pixelInitialized) {
+      // Manual events only; no advanced matching data is supplied.
+      window.fbq('set', 'autoConfig', false, pixelId);
+      window.fbq('init', pixelId);
+      pixelInitialized = true;
+    }
+    window.fbq('consent', 'grant');
+    if (!pixelPageView) {
+      window.fbq('trackSingle', pixelId, 'PageView');
+      pixelPageView = true;
+    }
+  }
+  function marketing() {
+    if (!choice || !choice.marketing) return;
+    if (pixelInitialized) { initializePixel(); return; }
+    if (pixelLoading) return;
+    if (!window.fbq) {
+      var n = window.fbq = function () {
+        if (n.callMethod) n.callMethod.apply(n, arguments);
+        else n.queue.push(arguments);
+      };
+      if (!window._fbq) window._fbq = n;
+      n.push = n; n.loaded = true; n.version = '2.0'; n.queue = [];
+    }
+    window.fbq('consent', 'revoke');
+    pixelLoading = true;
+    var tag = document.createElement('script');
+    tag.async = true; tag.src = 'https://connect.facebook.net/en_US/fbevents.js';
+    tag.onload = function () {
+      pixelLoading = false;
+      // Consent may have been withdrawn while the external script was loading.
+      if (!choice || !choice.marketing) { window.fbq('consent', 'revoke'); return; }
+      initializePixel();
+    };
+    tag.onerror = function () { pixelLoading = false; };
+    document.head.appendChild(tag);
+  }
+  var policyHTML = "<div class=\"sx-cookie-policy-intro\"><span class=\"sx-cookie-eyebrow\">COOKIE POLICY</span><h3>นโยบายคุกกี้ของ Sunnex Technology</h3><p>เว็บไซต์ sunnext.co.th ให้ความสำคัญกับความเป็นส่วนตัวของผู้เข้าชม นโยบายนี้อธิบายว่าเราใช้คุกกี้และพื้นที่จัดเก็บในเบราว์เซอร์เพื่ออะไร และคุณเลือกอนุญาตหรือปฏิเสธได้อย่างไร</p><small>มีผลวันที่ 26 พฤศจิกายน 2569</small></div>\n<section><h4>1. คุกกี้คืออะไร</h4><p>คุกกี้เป็นข้อมูลขนาดเล็กที่เว็บไซต์หรือผู้ให้บริการบันทึกในเบราว์เซอร์ เพื่อจดจำข้อมูลการใช้งาน เว็บไซต์ยังอาจใช้เทคโนโลยีใกล้เคียง เช่น localStorage ซึ่งจัดเก็บข้อมูลไว้ในอุปกรณ์ของคุณ ข้อมูลบางรายการอาจเชื่อมโยงกับผู้ใช้หรืออุปกรณ์ได้ จึงควรเลือกอนุญาตตามความต้องการของคุณ</p></section>\n<section><h4>2. เราใช้ข้อมูลเหล่านี้เพื่ออะไร</h4><ul><li><b>จดจำตัวเลือกความเป็นส่วนตัว:</b> บันทึกว่าคุณอนุญาตคุกกี้ประเภทใด เพื่อใช้ตัวเลือกเดียวกันเมื่อเปลี่ยนหน้าหรือกลับมาเยี่ยมชม</li><li><b>วิเคราะห์และปรับปรุงเว็บไซต์:</b> เมื่อคุณอนุญาตด้านสถิติ เราใช้ Google Analytics เพื่อเข้าใจจำนวนการเข้าชม หน้าที่ได้รับความสนใจ และการใช้งาน เช่น การกดติดต่อหรือดูรายละเอียดสินค้า</li><li><b>การโฆษณา:</b> เมื่อคุณอนุญาตคุกกี้โฆษณา เราใช้ Meta Pixel เพื่อบันทึกการเปิดหน้าเว็บ วัดผลโฆษณา และช่วยจัดกลุ่มผู้เข้าชมสำหรับโฆษณาที่เกี่ยวข้องกับความสนใจ</li></ul></section>\n<section><h4>3. ประเภทและระยะเวลาการจัดเก็บ</h4><div class=\"sx-cookie-policy-type\"><b>คุกกี้และพื้นที่จัดเก็บที่จำเป็น</b><p>ใช้ localStorage ชื่อ sunnex-cookie-consent-v1 เพื่อเก็บตัวเลือกและเวลาที่คุณบันทึก ระบบจะขอให้เลือกใหม่เมื่อครบ 180 วัน การลบข้อมูลเว็บไซต์หรือเปลี่ยนเบราว์เซอร์อาจทำให้ต้องเลือกใหม่ ข้อมูลตัวเลือกเดิมอาจยังอยู่ในอุปกรณ์จนถูกแทนที่หรือลบโดยคุณ</p></div><div class=\"sx-cookie-policy-type\"><b>คุกกี้เพื่อการวิเคราะห์</b><p>ใช้ Google Analytics โดยคุกกี้อาจมีชื่อ _ga และ _ga_* เพื่อแยกผู้ใช้และช่วงการเข้าชม ค่าอายุเริ่มต้นของผู้ให้บริการคือ 2 ปี ทั้งนี้อายุจริงขึ้นกับการตั้งค่าและข้อจำกัดของเบราว์เซอร์ เราจะเริ่มโหลด Google Analytics เมื่อคุณอนุญาตประเภทนี้เท่านั้น</p></div><div class=\"sx-cookie-policy-type\"><b>คุกกี้เพื่อการโฆษณา</b><p>ใช้ Meta Pixel ซึ่งอาจตั้งคุกกี้ _fbp และ _fbc ตามลักษณะการเข้าชมและการตั้งค่าของ Meta อายุคุกกี้ขึ้นกับผู้ให้บริการและเบราว์เซอร์ ระบบจะโหลด Meta Pixel และบันทึก PageView เมื่อคุณอนุญาตคุกกี้ประเภทนี้เท่านั้น หากปฏิเสธ ระบบจะไม่โหลดเครื่องมือนี้</p></div></section>\n<section><h4>4. คุณควบคุมคุกกี้ได้อย่างไร</h4><p>คุณเลือก “ยอมรับทั้งหมด” เพื่ออนุญาตคุกกี้ทางเลือกที่เปิดใช้งานอยู่ เลือก “ไม่ยอมรับทั้งหมด” เพื่อปิดคุกกี้ที่ไม่จำเป็น หรือเลือกเฉพาะประเภทแล้วกด “บันทึกการตั้งค่า” การปฏิเสธไม่ปิดกั้นการอ่านเนื้อหา การดูสินค้า หรือการติดต่อบริษัท</p><p>เปลี่ยนใจได้ทุกเมื่อผ่านปุ่ม “ตั้งค่าคุกกี้” มุมล่างซ้ายของเว็บไซต์ เมื่อถอนความยินยอมด้านสถิติหรือโฆษณา ระบบจะหยุดเครื่องมือประเภทที่คุณถอน และพยายามลบคุกกี้ของเครื่องมือนั้นที่เข้าถึงได้ และอาจโหลดหน้าใหม่เพื่อหยุดสคริปต์ที่ทำงานอยู่ การถอนความยินยอมไม่ลบข้อมูลที่ส่งไปก่อนหน้าโดยอัตโนมัติ</p><p>คุณสามารถลบข้อมูลเว็บไซต์ผ่านการตั้งค่าเบราว์เซอร์ได้ หากปิดกั้นพื้นที่จัดเก็บทั้งหมด ระบบอาจจำตัวเลือกข้ามหน้าไม่ได้</p></section>\n<section><h4>5. ผู้ให้บริการภายนอก</h4><p>เมื่ออนุญาต Google Analytics ผู้ให้บริการอาจประมวลผลข้อมูลการเข้าชม อุปกรณ์ เบราว์เซอร์ และเหตุการณ์ใช้งานตามการตั้งค่าบริการ อ่านเพิ่มเติมได้ที่ <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">นโยบายความเป็นส่วนตัวของ Google</a> และ <a href=\"https://support.google.com/analytics/answer/11397207\" target=\"_blank\" rel=\"noopener\">ข้อมูลคุกกี้ Google Analytics</a></p><p>เมื่ออนุญาตคุกกี้โฆษณา Meta อาจได้รับข้อมูล URL ของหน้าที่เปิด หน้าอ้างอิง ข้อมูลอุปกรณ์และเบราว์เซอร์ ที่อยู่ IP และตัวระบุคุกกี้ ตามการทำงานของ Meta Pixel ข้อมูลอาจถูกประมวลผลหรือจัดเก็บในต่างประเทศตามนโยบายของผู้ให้บริการ ระบบนี้ส่งเหตุการณ์ PageView โดยไม่เพิ่มข้อมูลชื่อ อีเมล หรือหมายเลขโทรศัพท์ในการตั้งค่า Pixel และปิดการตั้งค่าเหตุการณ์อัตโนมัติไว้ อ่านเพิ่มเติมที่ <a href=\"https://www.facebook.com/privacy/policy/\" target=\"_blank\" rel=\"noopener\">นโยบายความเป็นส่วนตัวของ Meta</a> และ <a href=\"https://www.facebook.com/policies/cookies/\" target=\"_blank\" rel=\"noopener\">นโยบายคุกกี้ของ Meta</a></p><p>ตัวเลือกในหน้าต่างนี้ควบคุม Google Analytics และ Meta Pixel ของเว็บไซต์ ส่วนแผนที่ เนื้อหาฝัง ตัวนับผู้เข้าชม และบริการที่คุณเปิดผ่านลิงก์ภายนอกอาจมีการประมวลผลข้อมูลแยกต่างหาก โปรดศึกษานโยบายของบริการนั้นด้วย</p></section>\n<section><h4>6. ติดต่อและการปรับปรุงนโยบาย</h4><p>หากมีคำถามเกี่ยวกับการใช้คุกกี้ ติดต่อ Sunnex Technology ผ่าน <a href=\"https://line.me/ti/p/~@sunnext\" target=\"_blank\" rel=\"noopener\">LINE @sunnext</a> โทร <a href=\"tel:021151484\">02-115-1484</a> หรือ <a href=\"tel:0814241186\">081-424-1186</a> เราจะปรับนโยบายนี้เมื่อการใช้เครื่องมือหรือวัตถุประสงค์เปลี่ยนแปลง พร้อมระบุวันที่มีผลไว้ในหน้านี้</p></section>\n";
   function save(allowed) {
-    var hadAnalytics = started;
-    // Advertising is not installed. Never collect advance consent for a future tool.
-    choice = {version: 1, necessary: true, analytics: !!allowed.analytics, marketing: false, savedAt: Date.now()};
+    var hadAnalytics = started, hadMarketing = pixelInitialized || pixelLoading;
+    choice = {version: 2, necessary: true, analytics: !!allowed.analytics, marketing: !!allowed.marketing, savedAt: Date.now()};
     try { localStorage.setItem(KEY, JSON.stringify(choice)); } catch (_) {}
     window['ga-disable-' + gaId] = !choice.analytics;
     if (!choice.analytics) clearAnalyticsCookies();
+    if (!choice.marketing) {
+      if (typeof window.fbq === 'function') window.fbq('consent', 'revoke');
+      clearMarketingCookies();
+    }
     analytics();
+    marketing();
     window.dispatchEvent(new CustomEvent('sunnex:consent-change', {detail: snapshot()}));
     document.getElementById('sx-cookie-banner').hidden = true;
     document.getElementById('sx-cookie-open').hidden = false;
     close();
     document.getElementById('sx-cookie-status').textContent = 'บันทึกการตั้งค่าคุกกี้แล้ว';
-    if (hadAnalytics && !choice.analytics) location.reload();
+    if ((hadAnalytics && !choice.analytics) || (hadMarketing && !choice.marketing)) location.reload();
   }
   function selectView(view, focusTab) {
     var isPolicy = view === 'policy';
@@ -75,6 +121,7 @@
     if (dialog.hidden) {
       previousFocus = document.activeElement;
       document.getElementById('sx-cookie-analytics').checked = !!(choice && choice.analytics);
+      document.getElementById('sx-cookie-marketing').checked = !!(choice && choice.marketing);
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       inertStates = [];
@@ -103,7 +150,7 @@
     var root = document.createElement('div'); root.id = 'sx-cookie-root';
     root.innerHTML = `
       <section id="sx-cookie-banner" aria-labelledby="sx-cookie-title" hidden>
-        <div class="sx-cookie-banner-copy"><span class="sx-cookie-banner-icon">${shield}</span><div><strong id="sx-cookie-title">คุณเลือกความเป็นส่วนตัวได้</strong><p>เราใช้คุกกี้เพื่อวิเคราะห์และปรับปรุงเว็บไซต์เมื่อคุณอนุญาต คุณเลือกยอมรับ ปฏิเสธ หรือเปลี่ยนการตั้งค่าได้ทุกเมื่อ <a href="/cookie-policy/" data-cookie="policy">อ่านนโยบายคุกกี้</a></p></div></div>
+        <div class="sx-cookie-banner-copy"><span class="sx-cookie-banner-icon">${shield}</span><div><strong id="sx-cookie-title">คุณเลือกความเป็นส่วนตัวได้</strong><p>เราใช้คุกกี้เพื่อวิเคราะห์เว็บไซต์และวัดผลโฆษณาเมื่อคุณอนุญาต คุณเลือกยอมรับ ปฏิเสธ หรือเปลี่ยนการตั้งค่าได้ทุกเมื่อ <a href="/cookie-policy/" data-cookie="policy">อ่านนโยบายคุกกี้</a></p></div></div>
         <div class="sx-cookie-actions"><button type="button" data-cookie="settings">ตั้งค่าคุกกี้</button><button type="button" data-cookie="reject">ไม่ยอมรับทั้งหมด</button><button type="button" class="sx-cookie-primary" data-cookie="accept">ยอมรับทั้งหมด</button></div>
       </section>
       <button id="sx-cookie-open" type="button" data-cookie="settings" hidden>${shield}<span>ตั้งค่าคุกกี้</span></button>
@@ -115,11 +162,11 @@
           <div id="sx-cookie-scroll" class="sx-cookie-scroll">
             <div id="sx-cookie-settings-view" role="tabpanel" aria-labelledby="sx-cookie-tab-settings">
               <a class="sx-cookie-brand-card" href="/cookie-policy/" data-cookie="policy"><span class="sx-cookie-brand-icon">${shield}</span><span><b>Cookie Policy (นโยบายคุกกี้)</b><small>sunnext.co.th · Sunnex Technology</small></span><span class="sx-cookie-chevron" aria-hidden="true">›</span></a>
-              <p class="sx-cookie-description">เราเคารพสิทธิความเป็นส่วนตัวของคุณ คุกกี้ที่จำเป็นช่วยจดจำตัวเลือก ส่วนคุกกี้เพื่อการวิเคราะห์จะเริ่มทำงานเมื่อคุณยินยอมเท่านั้น คุณปฏิเสธคุกกี้ที่ไม่จำเป็นได้ โดยยังอ่านบทความ ดูสินค้า และติดต่อเราได้ตามปกติ</p>
+              <p class="sx-cookie-description">เราเคารพสิทธิความเป็นส่วนตัวของคุณ คุกกี้ที่จำเป็นช่วยจดจำตัวเลือก ส่วนคุกกี้เพื่อการวิเคราะห์และโฆษณาจะเริ่มทำงานเมื่อคุณยินยอมประเภทนั้นเท่านั้น คุณปฏิเสธคุกกี้ที่ไม่จำเป็นได้ โดยยังอ่านบทความ ดูสินค้า และติดต่อเราได้ตามปกติ</p>
               <div class="sx-cookie-section-title"><h3>กำหนดความยินยอมคุกกี้</h3><span>เลือกได้ตามต้องการ</span></div>
               <div class="sx-cookie-category"><div class="sx-cookie-category-row"><button type="button" class="sx-cookie-disclosure" aria-expanded="false" aria-controls="sx-cookie-necessary-info" data-cookie="expand"><span class="sx-cookie-arrow" aria-hidden="true">›</span><span>คุกกี้ที่จำเป็น<small>เปิดใช้งานเสมอ</small></span></button><label class="sx-cookie-switch"><input type="checkbox" role="switch" checked disabled aria-label="คุกกี้ที่จำเป็น เปิดใช้งานเสมอ"><span aria-hidden="true"></span></label></div><div id="sx-cookie-necessary-info" class="sx-cookie-category-info" hidden>ใช้พื้นที่จัดเก็บในเบราว์เซอร์เพื่อจดจำตัวเลือกคุกกี้ของคุณ เมื่อเปลี่ยนหน้าจึงไม่ต้องเลือกซ้ำ ระบบจะขอให้เลือกใหม่หลัง 180 วัน โดยไม่ใช้ข้อมูลส่วนนี้เพื่อโฆษณา</div></div>
               <div class="sx-cookie-category"><div class="sx-cookie-category-row"><button type="button" class="sx-cookie-disclosure" aria-expanded="false" aria-controls="sx-cookie-analytics-info" data-cookie="expand"><span class="sx-cookie-arrow" aria-hidden="true">›</span><span>คุกกี้เพื่อการวิเคราะห์<small>ช่วยปรับปรุงเว็บไซต์ให้ใช้งานดีขึ้น</small></span></button><label class="sx-cookie-switch"><input id="sx-cookie-analytics" type="checkbox" role="switch" aria-label="อนุญาตคุกกี้เพื่อการวิเคราะห์"><span aria-hidden="true"></span></label></div><div id="sx-cookie-analytics-info" class="sx-cookie-category-info" hidden>Google Analytics ช่วยให้เราทราบจำนวนการเข้าชม หน้าที่ได้รับความสนใจ และการใช้งาน เช่น การกดติดต่อ ระบบนี้ไม่โหลด Google Analytics จนกว่าคุณจะอนุญาต คุณปิดได้ทุกเมื่อ</div></div>
-              <div class="sx-cookie-category"><div class="sx-cookie-category-row"><button type="button" class="sx-cookie-disclosure" aria-expanded="false" aria-controls="sx-cookie-marketing-info" data-cookie="expand"><span class="sx-cookie-arrow" aria-hidden="true">›</span><span>คุกกี้เพื่อการโฆษณา<small>ยังไม่เปิดใช้งาน</small></span></button><label class="sx-cookie-switch"><input id="sx-cookie-marketing" type="checkbox" role="switch" disabled aria-label="คุกกี้เพื่อการโฆษณา ยังไม่เปิดใช้งาน"><span aria-hidden="true"></span></label></div><div id="sx-cookie-marketing-info" class="sx-cookie-category-info" hidden>คุกกี้ประเภทนี้ใช้เพื่อวัดผลโฆษณาและนำเสนอเนื้อหาที่เกี่ยวข้องกับความสนใจ ขณะนี้เรายังไม่เปิดใช้ Meta Pixel จึงยังไม่ขอความยินยอมประเภทนี้ เมื่อมีการใช้งาน เราจะอัปเดตข้อมูลและตัวเลือกให้คุณพิจารณาก่อน</div></div>
+              <div class="sx-cookie-category"><div class="sx-cookie-category-row"><button type="button" class="sx-cookie-disclosure" aria-expanded="false" aria-controls="sx-cookie-marketing-info" data-cookie="expand"><span class="sx-cookie-arrow" aria-hidden="true">›</span><span>คุกกี้เพื่อการโฆษณา<small>วัดผลโฆษณาและนำเสนอเนื้อหาที่เกี่ยวข้อง</small></span></button><label class="sx-cookie-switch"><input id="sx-cookie-marketing" type="checkbox" role="switch" aria-label="อนุญาตคุกกี้เพื่อการโฆษณา"><span aria-hidden="true"></span></label></div><div id="sx-cookie-marketing-info" class="sx-cookie-category-info" hidden>Meta Pixel บันทึกการเปิดหน้าเว็บ (PageView) หลังคุณอนุญาต เพื่อวัดผลโฆษณาและช่วยจัดกลุ่มผู้เข้าชมสำหรับโฆษณาที่เกี่ยวข้อง ข้อมูลการเข้าชมและอุปกรณ์อาจส่งให้ Meta คุณปฏิเสธหรือถอนความยินยอมได้โดยไม่กระทบการดูเนื้อหา</div></div>
               <p class="sx-cookie-note">เปลี่ยนตัวเลือกได้ทุกเมื่อที่ปุ่ม “ตั้งค่าคุกกี้” บนเว็บไซต์</p>
             </div>
             <div id="sx-cookie-policy-view" class="sx-cookie-policy" role="tabpanel" aria-labelledby="sx-cookie-tab-policy" hidden>${policyHTML}<button type="button" class="sx-cookie-back" data-cookie="settings-tab">← กลับไปตั้งค่าคุกกี้</button></div>
@@ -135,9 +182,9 @@
       if (action === 'settings') open('settings');
       if (action === 'settings-tab' || action === 'policy-tab') selectView(action === 'policy-tab' ? 'policy' : 'settings', true);
       if (action === 'close') close();
-      if (action === 'reject') save({analytics: false});
-      if (action === 'accept') save({analytics: true});
-      if (action === 'save') save({analytics: document.getElementById('sx-cookie-analytics').checked});
+      if (action === 'reject') save({analytics: false, marketing: false});
+      if (action === 'accept') save({analytics: true, marketing: true});
+      if (action === 'save') save({analytics: document.getElementById('sx-cookie-analytics').checked, marketing: document.getElementById('sx-cookie-marketing').checked});
       if (action === 'expand') {
         var info = document.getElementById(button.getAttribute('aria-controls'));
         var expanded = button.getAttribute('aria-expanded') === 'true';
@@ -161,8 +208,10 @@
     document.getElementById('sx-cookie-banner').hidden = !!choice;
     document.getElementById('sx-cookie-open').hidden = !choice;
     analytics();
+    marketing();
   }
   window.addEventListener('storage', function (event) { if (event.key === KEY || event.key === null) location.reload(); });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
 })();
+
 
