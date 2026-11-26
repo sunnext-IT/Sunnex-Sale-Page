@@ -124,7 +124,7 @@
             </div>
             <div id="sx-cookie-policy-view" class="sx-cookie-policy" role="tabpanel" aria-labelledby="sx-cookie-tab-policy" hidden>${policyHTML}<button type="button" class="sx-cookie-back" data-cookie="settings-tab">← กลับไปตั้งค่าคุกกี้</button></div>
           </div>
-          <footer class="sx-cookie-modal-footer"><div class="sx-cookie-actions"><button type="button" data-cookie="reject">ไม่ยอมรับทั้งหมด</button><button type="button" data-cookie="accept">ยอมรับทั้งหมด</button><button type="button" data-cookie="save" class="sx-cookie-primary">บันทึกการตั้งค่า</button></div><small>เลือกเฉพาะคุกกี้ที่คุณอนุญาตได้ โดยไม่กระทบการดูเนื้อหา</small></footer>
+          <footer class="sx-cookie-modal-footer"><div class="sx-cookie-actions"><button type="button" data-cookie="reject">ไม่ยอมรับทั้งหมด</button><button type="button" data-cookie="accept">ยอมรับทั้งหมด</button><button type="button" data-cookie="save" class="sx-cookie-primary">บันทึกการตั้งค่า</button></div><div class="sx-cookie-credit"><span>PDPA · Cookie Consent Management</span><span class="sx-cookie-powered">Powered by <img src="/assets/images/แบรนด์/โลโก้-sunnex-technology.webp" alt="Sunnex Technology" width="430" height="268" decoding="async"></span></div></footer>
         </div>
       </div>`;
     document.body.appendChild(root);
@@ -165,3 +165,4 @@
   window.addEventListener('storage', function (event) { if (event.key === KEY || event.key === null) location.reload(); });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
 })();
+
